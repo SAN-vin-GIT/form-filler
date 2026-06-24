@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary: #6366f1;
+      --accent: #a855f7;
+    }
+    
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      width: 280px;
+      padding: 16px;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+    }
+    
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+    
+    .title {
+      font-size: 16px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a855f7, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin: 0;
+    }
+    
+    .btn-fill-all {
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+      transition: opacity 0.2s ease, transform 0.1s ease;
+      margin-bottom: 16px;
+    }
+    
+    .btn-fill-all:hover {
+      opacity: 0.95;
+      transform: translateY(-1px);
+    }
+    
+    .btn-fill-all:active {
+      transform: translateY(0);
+    }
+    
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin: 0 0 8px 0;
+      font-weight: 600;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    
+    .grid-btn {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      color: #e2e8f0;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s, border-color 0.15s, transform 0.1s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .grid-btn:hover {
+      background: #273549;
+      border-color: #475569;
+      color: white;
+      transform: translateY(-1px);
+    }
+    
+    .grid-btn:active {
+      transform: translateY(0);
+    }
+    
+    .footer {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <span style="font-size: 18px;">🎭</span>
+    <h2 class="title">Form Filler</h2>
+  </div>
+  
+  <button id="fillAll" class="btn-fill-all">Fill Entire Form</button>
+  
+  <h3 class="section-title">Fill Focused Field With...</h3>
+  <div class="grid">
+    <button class="grid-btn" data-type="full_name">👤 Full Name</button>
+    <button class="grid-btn" data-type="first_name">👤 First Name</button>
+    <button class="grid-btn" data-type="last_name">👤 Last Name</button>
+    <button class="grid-btn" data-type="email">✉️ Email</button>
+    <button class="grid-btn" data-type="username">🆔 Username</button>
+    <button class="grid-btn" data-type="password">🔑 Password</button>
+    <button class="grid-btn" data-type="phone">📞 Phone</button>
+    <button class="grid-btn" data-type="job_title">💼 Job Title</button>
+    <button class="grid-btn" data-type="company">🏢 Company</button>
+    <button class="grid-btn" data-type="ein">🔢 ID No.</button>
+    <button class="grid-btn" data-type="domain">🌐 Domain</button>
+    <button class="grid-btn" data-type="website">🌐 Website</button>
+    <button class="grid-btn" data-type="address">🏠 Address</button>
+    <button class="grid-btn" data-type="city">🌆 City</button>
+    <button class="grid-btn" data-type="state">🇺🇸 State</button>
+    <button class="grid-btn" data-type="zip">📮 ZIP Code</button>
+    <button class="grid-btn" data-type="country">🌍 Country</button>
+    <button class="grid-btn" data-type="routing_number">🏦 Routing No</button>
+    <button class="grid-btn" data-type="account_number">💳 Account No</button>
+    <button class="grid-btn" data-type="words">💬 Words</button>
+    <button class="grid-btn" data-type="sentence">📝 Sentence</button>
+    <button class="grid-btn" data-type="paragraph">📄 Paragraph</button>
+    <button class="grid-btn" data-type="text">🔤 Text</button>
+    <button class="grid-btn" data-type="datetime">📅 Datetime</button>
+    <button class="grid-btn" data-type="number">🔢 Number</button>
+  </div>
+  
+  <div class="footer">
+    Or right-click any field on the page
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

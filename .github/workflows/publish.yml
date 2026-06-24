@@ -1,0 +1,26 @@
+name: Publish Extension
+
+on:
+  push:
+    branches:
+      - main  # Triggers automatically when you push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Zip extension files
+        run: zip -r extension.zip . -x "*.git*" "*.DS_Store*" "scratch*" "*.github*" "test_form.html"
+
+      - name: Upload & Publish to Chrome Web Store
+        uses: wdzeng/chrome-extension-upload@v1
+        with:
+          client-id: ${{ secrets.CHROME_CLIENT_ID }}
+          client-secret: ${{ secrets.CHROME_CLIENT_SECRET }}
+          refresh-token: ${{ secrets.CHROME_REFRESH_TOKEN }}
+          app-id: ${{ secrets.CHROME_APP_ID }}
+          file-path: extension.zip
+          publish: true  # Automatically submits for review

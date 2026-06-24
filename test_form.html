@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Filler Test Bench</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f1f5f9;
+      color: #0f172a;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #4f46e5;
+    }
+    .form-group {
+      margin-bottom: 16px;
+      display: flex;
+      flex-direction: column;
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      font-size: 14px;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    input[type="date"],
+    input[type="datetime-local"],
+    input[type="password"],
+    textarea,
+    select {
+      padding: 8px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      background: white;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: 2px solid #6366f1;
+      border-color: transparent;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .skipped-fields {
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 2px dashed #cbd5e1;
+    }
+    .btn {
+      background: #4f46e5;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .logs {
+      margin-top: 20px;
+      padding: 12px;
+      background: #0f172a;
+      color: #38bdf8;
+      font-family: monospace;
+      font-size: 12px;
+      border-radius: 6px;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🎭 Form Filler Test Bench</h1>
+  <p>Use this form to test the Form Filler Chrome Extension context menus or the popup interface.</p>
+
+  <form id="testForm" onsubmit="event.preventDefault(); return false;">
+    <h3>Profile Information</h3>
+    <div class="row">
+      <div class="form-group">
+        <label for="fname">First Name (label-for + id)</label>
+        <input type="text" id="fname" placeholder="Enter first name">
+      </div>
+      <div class="form-group">
+        <label>Last Name (parent label)</label>
+        <label>
+          <input type="text" name="lastname" placeholder="Last name">
+        </label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="fullname">Full Name (name attr)</label>
+      <input type="text" name="fullname" id="fullname" placeholder="John Doe">
+    </div>
+
+    <h3>Account Settings</h3>
+    <div class="row">
+      <div class="form-group">
+        <label for="usr">Username (aria-label)</label>
+        <input type="text" id="usr" aria-label="Enter your preferred username">
+      </div>
+      <div class="form-group">
+        <label for="email_field">Email (input[type="email"])</label>
+        <input type="email" id="email_field" name="user_email">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pwd">Password (input[type="password"])</label>
+      <input type="password" id="pwd" name="pwd">
+    </div>
+
+    <h3>Contact & Profession</h3>
+    <div class="row">
+      <div class="form-group">
+        <label for="tel_field">Phone (input[type="tel"])</label>
+        <input type="tel" id="tel_field" placeholder="(555) 555-5555">
+      </div>
+      <div class="form-group">
+        <label for="age_field">Age / Number (input[type="number"])</label>
+        <input type="number" id="age_field" name="age" min="1" max="120">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="job">Job Title (placeholder)</label>
+        <input type="text" id="job" placeholder="Software Engineer">
+      </div>
+      <div class="form-group">
+        <label for="company">Company (autocomplete)</label>
+        <input type="text" id="company" autocomplete="organization">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="domain_field">Domain (name)</label>
+      <input type="text" name="domain" id="domain_field" placeholder="example.com">
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="ein_field">Employer Identification Number (EIN) *</label>
+        <input type="text" name="ein" id="ein_field" placeholder="12-3456789">
+      </div>
+      <div class="form-group">
+        <label for="website_field">Website *</label>
+        <input type="text" name="website" id="website_field" placeholder="https://example.com">
+      </div>
+    </div>
+
+    <h3>US Address (Should be consistent)</h3>
+    <div class="form-group">
+      <label for="addr">Street Address (placeholder)</label>
+      <input type="text" id="addr" placeholder="123 Main St">
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="city">City (name)</label>
+        <input type="text" name="city" id="city">
+      </div>
+      <div class="form-group">
+        <label for="state">State Abbreviation (maxLength=2)</label>
+        <input type="text" id="state" name="state" maxlength="2">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="state_full">State Full Name (maxLength=50)</label>
+        <input type="text" id="state_full" name="state_full_name" maxlength="50">
+      </div>
+      <div class="form-group">
+        <label for="zip">ZIP Code (placeholder)</label>
+        <input type="text" id="zip" placeholder="90210">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="country">Country (value)</label>
+      <input type="text" id="country" name="country">
+    </div>
+
+    <h3>Generated Content</h3>
+    <div class="form-group">
+      <label for="words">Tags / Words (id)</label>
+      <input type="text" id="words">
+    </div>
+    <div class="form-group">
+      <label for="sentence">Headline / Sentence (placeholder)</label>
+      <input type="text" id="sentence" placeholder="Add a short tagline">
+    </div>
+    <div class="form-group">
+      <label for="para">Bio / Paragraph (textarea name)</label>
+      <textarea id="para" name="paragraph" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="text_area">Notes / Text (textarea name)</label>
+      <textarea id="text_area" name="text" rows="3"></textarea>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="dt">Meeting Datetime (input[type="datetime-local"])</label>
+        <input type="datetime-local" id="dt">
+      </div>
+      <div class="form-group">
+        <label for="dob">Date of Birth (input[type="date"])</label>
+        <input type="date" id="dob">
+      </div>
+    </div>
+
+    <div class="skipped-fields">
+      <h3>Skipped Fields (Should NOT be filled by "Fill Entire Form")</h3>
+      <div class="row">
+        <div class="form-group">
+          <label for="select_element">Select Dropdown (should skip)</label>
+          <select id="select_element">
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="disabled_field">Disabled Field (should skip)</label>
+          <input type="text" id="disabled_field" value="Cannot edit me" disabled>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <label for="readonly_field">Read-only Field (should skip)</label>
+          <input type="text" id="readonly_field" value="ReadOnly value" readonly>
+        </div>
+        <div class="form-group">
+          <label>Checkbox & Radio (should skip)</label>
+          <div>
+            <label><input type="checkbox" id="skip_check"> Checkbox</label>
+            <label><input type="radio" name="skip_radio" id="skip_radio"> Radio</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="btn">Submit Form</button>
+  </form>
+
+  <h3>Event Logs</h3>
+  <div id="logs" class="logs">Form events will be logged here as they fire...</div>
+
+  <script>
+    // Event logging utility to verify input, change, and blur events
+    const logEl = document.getElementById("logs");
+    const fields = document.querySelectorAll("input, textarea, select");
+    
+    function logEvent(e) {
+      const el = e.target;
+      const logLine = document.createElement("div");
+      logLine.textContent = `[${new Date().toLocaleTimeString()}] ${el.id || el.name || el.tagName} fired '${e.type}' with value: "${el.value}"`;
+      logEl.appendChild(logLine);
+      logEl.scrollTop = logEl.scrollHeight;
+    }
+
+    fields.forEach(f => {
+      f.addEventListener("input", logEvent);
+      f.addEventListener("change", logEvent);
+      f.addEventListener("blur", logEvent);
+    });
+  </script>
+</body>
+</html>
